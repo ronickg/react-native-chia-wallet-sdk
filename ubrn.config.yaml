@@ -1,0 +1,6 @@
+name: ChiaWallet
+rust:
+  # Point to the Chia wallet SDK repo
+  repo: https://github.com/ronickg/chia-wallet-sdk
+  branch: main # or whichever branch/tag you want to use
+  manifestPath: uniffi/Cargo.toml # Path to the uniffi subfolder's Cargo.toml
