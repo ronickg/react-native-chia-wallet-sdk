@@ -10,7 +10,6 @@ npm install react-native-chia-wallet-sdk
 
 ## Usage
 
-
 ```js
 import { multiply } from 'react-native-chia-wallet-sdk';
 
@@ -18,7 +17,6 @@ import { multiply } from 'react-native-chia-wallet-sdk';
 
 const result = multiply(3, 7);
 ```
-
 
 ## Contributing
 
@@ -31,3 +29,11 @@ MIT
 ---
 
 Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+
+Note one needs to export:
+
+export ANDROID_NDK=....
+
+and
+
+export ANDROID_NDK_HOME=...

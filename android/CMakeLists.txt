@@ -46,31 +46,30 @@ cmake_path(
 add_library(my_rust_lib STATIC IMPORTED)
 set_target_properties(my_rust_lib PROPERTIES IMPORTED_LOCATION ${MY_RUST_LIB})
 
+# Add ReactAndroid libraries, being careful to account for different versions.
 find_package(ReactAndroid REQUIRED CONFIG)
-find_package(fbjni REQUIRED CONFIG)
-find_library(LOGCAT log)
 
-# Ideally we would just depend on `REACTNATIVE_MERGED_SO`
-# See https://github.com/react-native-community/discussions-and-proposals/discussions/816
-# For some reason (yet to be determined) we don't have REACTNATIVE_MERGED_SO set here.
-# See https://github.com/react-native-community/discussions-and-proposals/discussions/816#discussioncomment-10659654
-if (REACTNATIVE_MERGED_SO OR ReactAndroid_VERSION_MINOR GREATER_EQUAL 76)
-    target_link_libraries(
-        chia-wallet
-        fbjni::fbjni
-        ReactAndroid::jsi
-        ReactAndroid::reactnative
-        ${LOGCAT}
-        my_rust_lib
-    )
-else()
-    target_link_libraries(
-        chia-wallet
-        fbjni::fbjni
-        ReactAndroid::jsi
-        ReactAndroid::turbomodulejsijni
-        ReactAndroid::react_nativemodule_core
-        ${LOGCAT}
-        my_rust_lib
-    )
+# REACTNATIVE_MERGED_SO seems to be only be set in a build.gradle.kt file,
+# which we don't use. Thus falling back to version number sniffing.
+if (ReactAndroid_VERSION_MINOR GREATER_EQUAL 76)
+  set(REACTNATIVE_MERGED_SO true)
 endif()
+
+# https://github.com/react-native-community/discussions-and-proposals/discussions/816
+# This if-then-else can be removed once this library does not support version below 0.76
+if (REACTNATIVE_MERGED_SO)
+  target_link_libraries(chia-wallet ReactAndroid::reactnative)
+else()
+  target_link_libraries(chia-wallet
+    ReactAndroid::turbomodulejsijni
+    ReactAndroid::react_nativemodule_core
+  )
+endif()
+
+find_package(fbjni REQUIRED CONFIG)
+target_link_libraries(
+  chia-wallet
+  fbjni::fbjni
+  ReactAndroid::jsi
+  my_rust_lib
+)
