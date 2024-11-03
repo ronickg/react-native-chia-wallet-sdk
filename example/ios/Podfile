@@ -25,6 +25,10 @@ target 'ChiaWalletSdkExample' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  # We need to specify this here in the app because we can't add a local dependency within
+  # the react-native-matrix-rust-sdk
+  pod 'uniffi-bindgen-react-native', :path => '../../node_modules/uniffi-bindgen-react-native'
+
   target 'ChiaWalletSdkExampleTests' do
     inherit! :complete
     # Pods for testing

@@ -50,21 +50,13 @@ find_package(ReactAndroid REQUIRED CONFIG)
 find_package(fbjni REQUIRED CONFIG)
 find_library(LOGCAT log)
 
-# target_link_libraries(
-#   chia-wallet
-#   fbjni::fbjni
-#   ReactAndroid::jsi
-#   ReactAndroid::turbomodulejsijni
-#   ReactAndroid::react_nativemodule_core
-#   ${LOGCAT}
-#   my_rust_lib
-# )
-
-
-# Support both pre-0.76 and 0.76+ versions
-if (ReactAndroid_VERSION_MINOR GREATER_EQUAL 76)
+# Ideally we would just depend on `REACTNATIVE_MERGED_SO`
+# See https://github.com/react-native-community/discussions-and-proposals/discussions/816
+# For some reason (yet to be determined) we don't have REACTNATIVE_MERGED_SO set here.
+# See https://github.com/react-native-community/discussions-and-proposals/discussions/816#discussioncomment-10659654
+if (REACTNATIVE_MERGED_SO OR ReactAndroid_VERSION_MINOR GREATER_EQUAL 76)
     target_link_libraries(
-      chia-wallet
+        chia-wallet
         fbjni::fbjni
         ReactAndroid::jsi
         ReactAndroid::reactnative

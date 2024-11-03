@@ -202,6 +202,6 @@
     "version": "0.42.2"
   },
   "dependencies": {
-    "uniffi-bindgen-react-native": "https://github.com/jhugman/uniffi-bindgen-react-native"
+    "uniffi-bindgen-react-native": "https://github.com/ronickg/uniffi-bindgen-react-native"
   }
 }

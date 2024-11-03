@@ -4,7 +4,9 @@ import { generateMnemonic } from 'react-native-chia-wallet-sdk';
 export default function App() {
   console.log(generateMnemonic(24));
   return (
-    <View style={styles.container}>{/* <Text>Result: {result}</Text> */}</View>
+    <View style={styles.container}>
+      <Text>{generateMnemonic(24)}</Text>
+    </View>
   );
 }
 
